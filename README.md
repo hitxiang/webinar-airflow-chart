@@ -34,3 +34,6 @@ Create namespace airflow
 9. To check UI, `kubectl port-forward svc/airflow-webserver 8080:8080 -n airflow`
 
 # 3. Upgrade Airflow
+1. helm show values apache-airflow/airflow > values.yaml
+2. Make changes in values.yaml for airflow version, scheduler(KubernetesExecutor), webserver,docker image, replicas, environment variables from Configmap(ExtraEnvFrom), secrets
+3. `helm upgrade --install apache-airflow/airflow -n airflow -f values.yaml --debug`
