@@ -291,9 +291,11 @@ extraConfigMaps: {}
 # Extra env 'items' that will be added to the definition of airflow containers
 # a string is expected (can be templated).
 # TODO: difference from `env`? This is a templated string. Probably should template `env` and remove this.
-extraEnv: |
-  - name: AIRFLOW__CORE__LOAD_EXAMPLES
-    value: 'True'
+extraEnv: ~
+# eg:
+# extraEnv: |
+#   - name: AIRFLOW__CORE__LOAD_EXAMPLES
+#     value: 'True'
 
 # Extra envFrom 'items' that will be added to the definition of airflow containers
 # A string is expected (can be templated).
@@ -1530,11 +1532,11 @@ dags:
 logs:
   persistence:
     # Enable persistent volume for storing logs
-    enabled: true
-    # # Volume size for logs
-    # size: 100Gi
-    # # If using a custom storageClass, pass name here
-    # storageClassName:
+    enabled: false
+    # Volume size for logs
+    size: 100Gi
+    # If using a custom storageClass, pass name here
+    storageClassName:
     ## the name of an existing PVC to use
-    existingClaim: airflow-logs
+    existingClaim:
 
