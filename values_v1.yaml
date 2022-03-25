@@ -104,7 +104,7 @@ labels: {}
 # Ingress configuration
 ingress:
   # Enable ingress resource
-  enabled: false
+  enabled: true
 
   # Configs for the Ingress of the web Service
   web:
@@ -131,7 +131,7 @@ ingress:
     #     secretName: ""
 
     # The Ingress Class for the web Ingress (used only with Kubernetes v1.19 and above)
-    ingressClassName: ""
+    ingressClassName: "nginx"
 
     # configs for web Ingress TLS (Deprecated - renamed to `ingress.web.hosts[*].tls`)
     tls:
@@ -170,7 +170,7 @@ ingress:
     #     secretName: ""
 
     # The Ingress Class for the flower Ingress (used only with Kubernetes v1.19 and above)
-    ingressClassName: ""
+    ingressClassName: "nginx"
 
     # configs for flower Ingress TLS (Deprecated - renamed to `ingress.flower.hosts[*].tls`)
     tls:
@@ -319,7 +319,7 @@ data:
     user: postgres
     pass: postgres
     protocol: postgresql
-    host: ~
+    host: airflow-meta.cdxmxw1df5zs.ap-northeast-1.rds.amazonaws.com
     port: 5432
     db: postgres
     sslmode: disable
@@ -1345,7 +1345,7 @@ cleanup:
 # Configuration for postgresql subchart
 # Not recommended for production
 postgresql:
-  enabled: true
+  enabled: false
   postgresqlPassword: postgres
   postgresqlUsername: postgres
 
