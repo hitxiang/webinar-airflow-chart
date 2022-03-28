@@ -26,6 +26,10 @@ prometheus:
     - "/prometheus"
   prometheusSpec:
     routePrefix: "/prometheus"
+    additionalScrapeConfigs:
+      - job_name: airflow-statsd-exporter
+        static_configs:
+          - targets: ['airflow-statsd.airflow:9102']
 alertmanager:
   ingress:
     enabled: true
