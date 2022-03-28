@@ -112,16 +112,17 @@ ingress:
     annotations: {}
 
     # The path for the web Ingress
-    path: "/"
+    path: "/airflow"
 
     # The pathType for the above path (used only with Kubernetes v1.19 and above)
-    pathType: "ImplementationSpecific"
+    pathType: "Prefix"
 
     # The hostname for the web Ingress (Deprecated - renamed to `ingress.web.hosts`)
     host: ""
 
     # The hostnames or hosts configuration for the web Ingress
-    hosts: []
+    hosts: 
+      - aa2e920848cd54b74b7b49ac188afab2-883849872.ap-northeast-1.elb.amazonaws.com
     # - name: ""
     #   # configs for web Ingress TLS
     #   tls:
@@ -141,7 +142,12 @@ ingress:
       secretName: ""
 
     # HTTP paths to add to the web Ingress before the default path
-    precedingPaths: []
+    # precedingPaths:
+    #  - path: "/airflow/*"
+    #    serviceName: airflow-webserver
+    #    servicePort: airflow-ui
+    #    pathType: ImplementationSpecific
+
 
     # Http paths to add to the web Ingress after the default path
     succeedingPaths: []
@@ -293,9 +299,9 @@ extraConfigMaps: {}
 # TODO: difference from `env`? This is a templated string. Probably should template `env` and remove this.
 extraEnv: ~
 # eg:
-# extraEnv: |
-#   - name: AIRFLOW__CORE__LOAD_EXAMPLES
-#     value: 'True'
+extraEnv: |
+  - name: AIRFLOW__CORE__LOAD_EXAMPLES
+    value: 'True'
 
 # Extra envFrom 'items' that will be added to the definition of airflow containers
 # A string is expected (can be templated).
@@ -1383,6 +1389,7 @@ config:
     enable_proxy_fix: 'True'
     # For Airflow 1.10
     rbac: 'True'
+    base_url: http://aa2e920848cd54b74b7b49ac188afab2-883849872.ap-northeast-1.elb.amazonaws.com/airflow
   celery:
     worker_concurrency: 16
   scheduler:
