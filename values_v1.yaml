@@ -1335,8 +1335,10 @@ config:
   api:
     auth_backend: airflow.api.auth.backend.deny_all
   logging:
-    remote_logging: '{{- ternary "True" "False" .Values.elasticsearch.enabled }}'
+    remote_logging: 'True'
     colored_console_log: 'False'
+    remote_base_log_folder: "s3://inv-mm-sandbox-airflow/airflow"
+    remote_log_conn_id: "aws_default"
   metrics:
     statsd_on: '{{ ternary "True" "False" .Values.statsd.enabled }}'
     statsd_port: 9125
