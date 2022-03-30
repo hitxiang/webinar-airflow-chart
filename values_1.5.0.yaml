@@ -104,7 +104,7 @@ labels: {}
 # Ingress configuration
 ingress:
   # Enable ingress resource
-  enabled: true
+  enabled: false
 
   # Configs for the Ingress of the web Service
   web:
@@ -112,17 +112,16 @@ ingress:
     annotations: {}
 
     # The path for the web Ingress
-    path: "/airflow"
+    path: "/"
 
     # The pathType for the above path (used only with Kubernetes v1.19 and above)
-    pathType: "Prefix"
+    pathType: "ImplementationSpecific"
 
     # The hostname for the web Ingress (Deprecated - renamed to `ingress.web.hosts`)
     host: ""
 
     # The hostnames or hosts configuration for the web Ingress
-    hosts: 
-      - aa2e920848cd54b74b7b49ac188afab2-883849872.ap-northeast-1.elb.amazonaws.com
+    hosts: []
     # - name: ""
     #   # configs for web Ingress TLS
     #   tls:
@@ -132,7 +131,7 @@ ingress:
     #     secretName: ""
 
     # The Ingress Class for the web Ingress (used only with Kubernetes v1.19 and above)
-    ingressClassName: "nginx"
+    ingressClassName: ""
 
     # configs for web Ingress TLS (Deprecated - renamed to `ingress.web.hosts[*].tls`)
     tls:
@@ -171,7 +170,7 @@ ingress:
     #     secretName: ""
 
     # The Ingress Class for the flower Ingress (used only with Kubernetes v1.19 and above)
-    ingressClassName: "nginx"
+    ingressClassName: ""
 
     # configs for flower Ingress TLS (Deprecated - renamed to `ingress.flower.hosts[*].tls`)
     tls:
@@ -221,7 +220,7 @@ rbac:
 
 # Airflow executor
 # Options: LocalExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
-executor: "KubernetesExecutor"
+executor: "CeleryExecutor"
 
 # If this is true and using LocalExecutor/KubernetesExecutor/CeleryKubernetesExecutor, the scheduler's
 # service account will have access to communicate with the api-server and launch pods.
@@ -294,9 +293,9 @@ extraConfigMaps: {}
 # TODO: difference from `env`? This is a templated string. Probably should template `env` and remove this.
 extraEnv: ~
 # eg:
-extraEnv: |
-  - name: AIRFLOW__CORE__LOAD_EXAMPLES
-    value: 'True'
+# extraEnv: |
+#   - name: AIRFLOW__CORE__LOAD_EXAMPLES
+#     value: 'True'
 
 # Extra envFrom 'items' that will be added to the definition of airflow containers
 # A string is expected (can be templated).
@@ -320,7 +319,7 @@ data:
     user: postgres
     pass: postgres
     protocol: postgresql
-    host: airflow-meta.cdxmxw1df5zs.ap-northeast-1.rds.amazonaws.com
+    host: ~
     port: 5432
     db: postgres
     sslmode: disable
@@ -437,10 +436,10 @@ workers:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: airflow-sa
+    name: ~
 
     # Annotations to add to worker kubernetes service account.
     annotations: {}
@@ -606,10 +605,10 @@ scheduler:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: airflow-sa
+    name: ~
 
     # Annotations to add to scheduler kubernetes service account.
     annotations: {}
@@ -718,7 +717,7 @@ createUserJob:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -775,7 +774,7 @@ migrateDatabaseJob:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -821,7 +820,7 @@ webserver:
     periodSeconds: 5
 
   # Number of webservers
-  replicas: 2
+  replicas: 1
 
   # Command to use when running the Airflow webserver (templated).
   command: ~
@@ -831,10 +830,10 @@ webserver:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: airflow-sa
+    name: ~
 
     # Annotations to add to webserver kubernetes service account.
     annotations: {}
@@ -985,10 +984,10 @@ triggerer:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: airflow-sa 
+    name: ~
 
     # Annotations to add to triggerer kubernetes service account.
     annotations: {}
@@ -1085,10 +1084,10 @@ flower:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: airflow-sa
+    name: ~
 
     # Annotations to add to worker kubernetes service account.
     annotations: {}
@@ -1190,7 +1189,7 @@ pgbouncer:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -1279,6 +1278,8 @@ pgbouncer:
   affinity: {}
   tolerations: []
 
+  priorityClassName: ~
+
   uid: 65534
 
   metricsExporterSidecar:
@@ -1299,7 +1300,7 @@ redis:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -1414,7 +1415,7 @@ cleanup:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: false
+    create: true
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -1430,7 +1431,7 @@ cleanup:
 # Configuration for postgresql subchart
 # Not recommended for production
 postgresql:
-  enabled: false
+  enabled: true
   postgresqlPassword: postgres
   postgresqlUsername: postgres
 
@@ -1454,10 +1455,8 @@ config:
     colored_console_log: 'False'
     remote_logging: '{{- ternary "True" "False" .Values.elasticsearch.enabled }}'
   logging:
-    remote_logging: 'True'
+    remote_logging: '{{- ternary "True" "False" .Values.elasticsearch.enabled }}'
     colored_console_log: 'False'
-    remote_base_log_folder: "s3://inv-mm-sandbox-airflow/airflow"
-    remote_log_conn_id: "aws_default"
   metrics:
     statsd_on: '{{ ternary "True" "False" .Values.statsd.enabled }}'
     statsd_port: 9125
@@ -1467,7 +1466,6 @@ config:
     enable_proxy_fix: 'True'
     # For Airflow 1.10
     rbac: 'True'
-    base_url: http://aa2e920848cd54b74b7b49ac188afab2-883849872.ap-northeast-1.elb.amazonaws.com/airflow
   celery:
     worker_concurrency: 16
   scheduler:
