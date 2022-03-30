@@ -442,10 +442,10 @@ workers:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: ~
+    name: airflow-sa
 
     # Annotations to add to worker kubernetes service account.
     annotations: {}
@@ -593,10 +593,10 @@ scheduler:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: ~
+    name: airflow-sa
 
     # Annotations to add to scheduler kubernetes service account.
     annotations: {}
@@ -679,7 +679,7 @@ createUserJob:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -725,7 +725,7 @@ migrateDatabaseJob:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -771,7 +771,7 @@ webserver:
     periodSeconds: 5
 
   # Number of webservers
-  replicas: 1
+  replicas: 2
 
   # Command to use when running the Airflow webserver (templated).
   command: ~
@@ -781,10 +781,10 @@ webserver:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: ~
+    name: airflow-sa
 
     # Annotations to add to webserver kubernetes service account.
     annotations: {}
@@ -914,10 +914,10 @@ triggerer:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: ~
+    name: airflow-sa 
 
     # Annotations to add to triggerer kubernetes service account.
     annotations: {}
@@ -1012,10 +1012,10 @@ flower:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
-    name: ~
+    name: airflow-sa
 
     # Annotations to add to worker kubernetes service account.
     annotations: {}
@@ -1070,7 +1070,7 @@ pgbouncer:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -1179,7 +1179,7 @@ redis:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
@@ -1292,7 +1292,7 @@ cleanup:
   # Create ServiceAccount
   serviceAccount:
     # Specifies whether a ServiceAccount should be created
-    create: true
+    create: false
     # The name of the ServiceAccount to use.
     # If not set and create is true, a name is generated using the release name
     name: ~
